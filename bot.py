@@ -32,10 +32,15 @@ def create_calendar(year, month, file_name):
             else:
                 display_text = str(day)
                 formatted_date = f"{year}-{month:02d}-{day:02d}"  # Updated format here
+                user_with_date = None
+                # Check if the date is taken by a user
                 for user, data in users_data.items():
                     if formatted_date in data.get('dates', []):
-                        display_text = user[0]  # First letter of username
+                        user_with_date = user
                         break
+                # Use the first letter of the username if the date is taken
+                if user_with_date:
+                    display_text = user_with_date[0]  # First letter of username
                 week_row.append(InlineKeyboardButton(display_text, callback_data=f"{year}-{month}-{day}"))
         keyboard.append(week_row)
         
